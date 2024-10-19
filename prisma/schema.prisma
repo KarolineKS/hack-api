@@ -19,7 +19,7 @@ model User {
   name     String  @db.VarChar(100)
   email    String  @db.VarChar(100)
   phone    String  @db.VarChar(11)
-  address  String? @db.VarChar(255) // TODO: Define structure for address
+  address  String @db.VarChar(255) // TODO: Define structure for address
 
   orders Order[]
 }
@@ -31,7 +31,7 @@ model Company {
   email   String  @db.VarChar(100)
   phone   String  @db.VarChar(14)
   type    String  @db.VarChar(100)
-  address String? @db.VarChar(255) // TODO: Define structure for address
+  address String  @db.VarChar(255) // TODO: Define structure for address
 
   products Product[]
 }
@@ -45,18 +45,18 @@ model Product {
   discountedPrice Decimal   @db.Decimal(10, 2) // Adjust precision and scale as needed
   companyId       Int     
   stock           Int
-  category        String?   @db.VarChar(100)
+  category        String   @db.VarChar(100)
   condition       String // TODO: Define structure for condition
-  expiresIn       DateTime?
+  expiresIn       Int
 
   company Company @relation(fields: [companyId], references: [id])
   orders  Order[]
 }
 
 model Order {
-  id    Int      @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   productId Int // Reference to Product
-  userId   Int // Reference to User
+  userId    Int // Reference to User
   orderedAt DateTime
   delivered Boolean
 
