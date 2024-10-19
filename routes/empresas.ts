@@ -6,10 +6,10 @@ const prisma = new PrismaClient()
 const router = Router()
 
 const companySchema = z.object({
-  cnpj: z.string().length(14), // CNPJ must be exactly 14 characters
+  cnpj: z.string().length(18), // CNPJ must be exactly 14 characters
   name: z.string().max(100),
   email: z.string().email().max(100), // Validates that the email is in a correct format
-  phone: z.string().length(14), // Assuming phone is exactly 14 characters
+  phone: z.string(),
   type: z.string().max(100),
   address: z.string().max(255).optional(), // Optional address field
 

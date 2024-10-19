@@ -7,10 +7,10 @@ const router = Router()
 
 const userSchema = z.object({
   id: z.number().int().optional(), // Optional for creating a new user (auto-incremented by Prisma)
-  cpf: z.string().length(11), // Required string that must be exactly 11 characters
+  cpf: z.string().length(14),
   name: z.string().max(100), // Required string with a maximum length of 100 characters
   email: z.string().email().max(100), // Required string that must be a valid email format
-  phone: z.string().length(11), // Required string that must be exactly 11 characters
+  phone: z.string(),
   address: z.string().max(255).optional(), // Optional string with a maximum length of 255 characters
 
   orders: z.array(z.object({
