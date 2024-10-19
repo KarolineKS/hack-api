@@ -11,7 +11,7 @@ const companySchema = z.object({
   email: z.string().email().max(100), // Validates that the email is in a correct format
   phone: z.string(),
   type: z.string().max(100),
-  address: z.string().max(255).optional(), // Optional address field
+  address: z.string().max(255), // Optional address field
 
   products: z.array(z.object({
     id: z.number().int(), // Assuming Product has an id

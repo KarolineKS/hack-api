@@ -11,7 +11,7 @@ const userSchema = z.object({
   name: z.string().max(100), // Required string with a maximum length of 100 characters
   email: z.string().email().max(100), // Required string that must be a valid email format
   phone: z.string(),
-  address: z.string().max(255).optional(), // Optional string with a maximum length of 255 characters
+  address: z.string().max(255), // Optional string with a maximum length of 255 characters
 
   orders: z.array(z.object({
     number: z.number().int(), // Assuming Order has a number field

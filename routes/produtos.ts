@@ -14,9 +14,9 @@ const productSchema = z.object({
   discountedPrice: z.number().min(0), // Required non-negative number for discounted price
   companyId: z.number().int().nonnegative(), // Required non-negative integer for company reference
   stock: z.number().int().nonnegative(), // Required non-negative integer for stock
-  category: z.string().max(100).optional(), // Optional string with a maximum length of 100 characters
+  category: z.string().max(100), // Optional string with a maximum length of 100 characters
   condition: z.string(), // Required string; you might want to define its structure later
-  expiresIn: z.date().optional(), // Optional date indicating expiration
+  expiresIn: z.number().int(), // Optional date indicating expiration
 });
 
 router.get("/", async (req, res) => {
