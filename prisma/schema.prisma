@@ -13,25 +13,51 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Marca {
-  id             Int         @id @default(autoincrement())
-  nome           String      @db.VarChar(30)
-  cidade         String      @db.VarChar(20)
-  representante  String      @db.VarChar(30)
-  fone           String      @db.VarChar(20)
-  vinhos         Vinho[]
-  @@map("marcas")
+model User {
+  cpf      String  @id @db.VarChar(11)
+  name     String  @db.VarChar(100)
+  email    String  @db.VarChar(100)
+  phone    String  @db.VarChar(11)
+  address  String? @db.VarChar(255) // TODO: Define structure for address
+  password String  @db.VarChar(100)
+
+  orders Order[]
 }
 
-model Vinho {
-  id       Int       @id @default(autoincrement())
-  tipo     String    @db.VarChar(30)
-  preco    Decimal   @db.Decimal(9,2)
-  quant    Int       @db.SmallInt
-  teor     Decimal   @db.Decimal(6,2)
-  ano      Int       @db.SmallInt
-  marca    Marca     @relation(fields: [marcaId], references: [id])
-  marcaId  Int
-  @@map("vinhos")
+model Company {
+  cnpj    String  @id @db.VarChar(14)
+  name    String  @db.VarChar(100)
+  email   String  @db.VarChar(100)
+  phone   String  @db.VarChar(14)
+  type    String  @db.VarChar(100)
+  address String? @db.VarChar(255) // TODO: Define structure for address
+
+  products Product[]
 }
 
+model Product {
+  id          Int       @id @default(autoincrement())
+  image       Bytes? // Change from blob to Bytes for Prisma
+  name        String    @db.VarChar(100)
+  description String?   @db.VarChar(255)
+  price       Decimal   @db.Decimal(10, 2) // Adjust precision and scale as needed
+  companyCnpj String    @db.VarChar(14)
+  stock       Int
+  category    String?   @db.VarChar(100)
+  condition   String? // TODO: Define structure for condition
+  expiresIn   DateTime?
+
+  company Company @relation(fields: [companyCnpj], references: [cnpj])
+  orders  Order[]
+}
+
+model Order {
+  number    Int      @id @default(autoincrement())
+  productId Int // Reference to Product
+  userCpf   String // Reference to User
+  orderedAt DateTime
+  delivered Boolean
+
+  product Product @relation(fields: [productId], references: [id])
+  user    User    @relation(fields: [userCpf], references: [cpf])
+}
