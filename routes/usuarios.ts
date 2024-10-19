@@ -28,6 +28,18 @@ router.get("/", async (req, res) => {
   }
 })
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params
+  try {
+    const user = await prisma.user.findUnique({
+      where: { id: Number(id) }
+    })
+    res.status(200).json(user)
+  } catch (error) {
+    res.status(400).json({ erro: error })
+  }
+})
+
 router.post("/", async (req, res) => {
 
   const valida = userSchema.safeParse(req.body)

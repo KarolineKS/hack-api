@@ -28,6 +28,18 @@ router.get("/", async (req, res) => {
   }
 })
 
+router.get("/:id", async (req, res) => {
+  const { id } = req.params
+  try {
+    const company = await prisma.company.findUnique({
+      where: { id: Number(id) }
+    })
+    res.status(200).json(company)
+  } catch (error) {
+    res.status(400).json({ erro: error })
+  }
+})
+
 router.post("/", async (req, res) => {
 
   const valida = companySchema.safeParse(req.body)

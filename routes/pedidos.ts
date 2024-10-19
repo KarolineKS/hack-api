@@ -27,10 +27,22 @@ const orderSchema = z.object({
 
 router.get("/", async (req, res) => {
   try {
-    const orders = await prisma.product.findMany()
+    const orders = await prisma.order.findMany()
     res.status(200).json(orders)
   } catch (error) {
     res.status(500).json({ erro: error })
+  }
+})
+
+router.get("/:id", async (req, res) => {
+  const { id } = req.params
+  try {
+    const orders = await prisma.order.findUnique({
+      where: { id: Number(id) }
+    })
+    res.status(200).json(orders)
+  } catch (error) {
+    res.status(400).json({ erro: error })
   }
 })
 
