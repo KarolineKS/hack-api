@@ -1,17 +1,21 @@
 import express from 'express'
-import routesMarcas from './routes/marcas'
-import routesVinhos from './routes/vinhos'
+import routesProdutos from './routes/produtos'
+import routesEmpresas from './routes/empresas'
+import routesPedidos from './routes/pedidos'
+import routesUsuarios from './routes/usuarios'
 
 const app = express()
-const port = 3000
+const port = 3001
 
 app.use(express.json())
 
-app.use("/marcas", routesMarcas)
-app.use("/vinhos", routesVinhos)
+app.use("/produtos", routesProdutos)
+app.use("/empresas", routesEmpresas)
+app.use("/pedidos", routesPedidos)
+app.use("/usuarios", routesUsuarios)
 
 app.get('/', (req, res) => {
-  res.send('API de Cadastro de Marcas e Vinhos')
+  res.send('API Ultima Chance')
 })
 
 app.listen(port, () => {
