@@ -14,18 +14,19 @@ datasource db {
 }
 
 model User {
-  cpf      String  @id @db.VarChar(11)
+  id       Int     @id @default(autoincrement())
+  cpf      String  @db.VarChar(11)
   name     String  @db.VarChar(100)
   email    String  @db.VarChar(100)
   phone    String  @db.VarChar(11)
   address  String? @db.VarChar(255) // TODO: Define structure for address
-  password String  @db.VarChar(100)
 
   orders Order[]
 }
 
 model Company {
-  cnpj    String  @id @db.VarChar(14)
+  id      Int     @id @default(autoincrement())
+  cnpj    String  @db.VarChar(14)
   name    String  @db.VarChar(100)
   email   String  @db.VarChar(100)
   phone   String  @db.VarChar(14)
@@ -36,28 +37,29 @@ model Company {
 }
 
 model Product {
-  id          Int       @id @default(autoincrement())
-  image       Bytes? // Change from blob to Bytes for Prisma
-  name        String    @db.VarChar(100)
-  description String?   @db.VarChar(255)
-  price       Decimal   @db.Decimal(10, 2) // Adjust precision and scale as needed
-  companyCnpj String    @db.VarChar(14)
-  stock       Int
-  category    String?   @db.VarChar(100)
-  condition   String? // TODO: Define structure for condition
-  expiresIn   DateTime?
+  id              Int       @id @default(autoincrement())
+  image           String // Change from blob to Bytes for Prisma
+  name            String    @db.VarChar(100)
+  description     String?   @db.VarChar(255)
+  fullPrice       Decimal   @db.Decimal(10, 2) // Adjust precision and scale as needed
+  discountedPrice Decimal   @db.Decimal(10, 2) // Adjust precision and scale as needed
+  companyId       Int     
+  stock           Int
+  category        String?   @db.VarChar(100)
+  condition       String // TODO: Define structure for condition
+  expiresIn       DateTime?
 
-  company Company @relation(fields: [companyCnpj], references: [cnpj])
+  company Company @relation(fields: [companyId], references: [id])
   orders  Order[]
 }
 
 model Order {
-  number    Int      @id @default(autoincrement())
+  id    Int      @id @default(autoincrement())
   productId Int // Reference to Product
-  userCpf   String // Reference to User
+  userId   Int // Reference to User
   orderedAt DateTime
   delivered Boolean
 
   product Product @relation(fields: [productId], references: [id])
-  user    User    @relation(fields: [userCpf], references: [cpf])
+  user    User    @relation(fields: [userId], references: [id])
 }

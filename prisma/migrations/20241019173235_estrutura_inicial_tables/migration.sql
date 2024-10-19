@@ -5,14 +5,6 @@
   - You are about to drop the `vinhos` table. If the table is not empty, all the data it contains will be lost.
 
 */
--- DropForeignKey
-ALTER TABLE `vinhos` DROP FOREIGN KEY `vinhos_marcaId_fkey`;
-
--- DropTable
-DROP TABLE `marcas`;
-
--- DropTable
-DROP TABLE `vinhos`;
 
 -- CreateTable
 CREATE TABLE `User` (
